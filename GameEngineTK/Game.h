@@ -11,6 +11,7 @@
 #include <CommonStates.h>
 #include <SimpleMath.h>
 #include <Model.h>
+#include <Keyboard.h>
 #include "DebugCamera.h"
 
 
@@ -92,6 +93,20 @@ private:
 	//球ワールド行列
 	DirectX::SimpleMath::Matrix m_worldBall[20];
 	DirectX::SimpleMath::Matrix m_worldBallTest;
+	//ティーポットモデル
+	std::unique_ptr<DirectX::Model> m_modelTeapot;
+	DirectX::SimpleMath::Matrix m_worldTeapot[20];
+	//ロボットの頭モデル
+	std::unique_ptr<DirectX::Model> m_modelHead;
+	//キーボード
+	std::unique_ptr<DirectX::Keyboard> keyboard;
+	//自機の座標
+	DirectX::SimpleMath::Vector3 tank_pos;
+	//自機のワールド行列
+	DirectX::SimpleMath::Matrix tank_world;
+	//自機の回転角
+	float rotHead;
 
-	float rotY;
+	float rotY[20];
+	float x[20];
 };
