@@ -13,6 +13,7 @@
 #include <Model.h>
 #include <Keyboard.h>
 #include "DebugCamera.h"
+#include "Camera.h"
 
 
 // A basic game implementation that creates a D3D11 device and
@@ -106,6 +107,9 @@ private:
 	DirectX::SimpleMath::Matrix tank_world;
 	//©‹@‚Ì‰ñ“]Šp
 	float rotHead;
+
+	//ƒJƒƒ‰
+	std::unique_ptr<Camera> m_Camera;
 
 	float rotY[20];
 	float x[20];
