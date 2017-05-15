@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <d3d11.h>
 #include <SimpleMath.h>
 
 
@@ -14,19 +15,19 @@ public:
 	virtual ~Camera();
 
 	//更新処理
-	void Update();
+	virtual void Update();
 
 	//ビュー行列を取得
-	DirectX::SimpleMath::Matrix GetViewMatrix();
+	const DirectX::SimpleMath::Matrix& GetViewMatrix();
 	//射影行列を取得
-	DirectX::SimpleMath::Matrix GetProjectionMatrix();
+	const DirectX::SimpleMath::Matrix& GetProjectionMatrix();
 
 	//視点をセット
-	void SetEyePos(DirectX::SimpleMath::Vector3 eyepos);
+	void SetEyePos(const DirectX::SimpleMath::Vector3& eyepos);
 	//注視点をセット
-	void SetRefPos(DirectX::SimpleMath::Vector3 refpos);
+	void SetRefPos(const DirectX::SimpleMath::Vector3& refpos);
 	//上方向ベクトルをセット
-	void SetUpVec(DirectX::SimpleMath::Vector3 upvec);
+	void SetUpVec(const DirectX::SimpleMath::Vector3& upvec);
 
 	//垂直方向視野角をセット
 	void SetFovY(float fovY);

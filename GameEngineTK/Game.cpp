@@ -155,7 +155,7 @@ void Game::Initialize(HWND window, int width, int height)
 	//}
 
 	//カメラの生成
-	m_Camera = std::make_unique<Camera>();
+	m_Camera = std::make_unique<FollowCamera>(m_outputWidth,m_outputHeight);
 }
 
 // Executes the basic game loop.
@@ -182,11 +182,16 @@ void Game::Update(DX::StepTimer const& timer)
 	//ビュー行列を取得
 	//m_view = m_debugCamera->GetCameraMatrix();
 
-	m_Camera->Update();
-	m_view = m_Camera->GetViewMatrix();
-	m_proj = m_Camera->GetProjectionMatrix();
+	{//自機に追従するカメラ
+		m_Camera->SetTargetPos(tank_pos);
+		m_Camera->SetTargetAngle(rotHead);
 
-	m_Camera->SetEyePos(tank_pos);
+		//カメラの更新
+		m_Camera->Update();
+		m_view = m_Camera->GetViewMatrix();
+		m_proj = m_Camera->GetProjectionMatrix();
+
+	}
 
 	////何処から見るのか（視点）
 	//Vector3 eyepos(0, 0, 5.0f);

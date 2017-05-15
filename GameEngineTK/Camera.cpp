@@ -2,7 +2,6 @@
 //カメラの制御
 //
 
-#include "Game.h"
 #include "Camera.h"
 
 using namespace DirectX;
@@ -15,13 +14,16 @@ Camera::Camera(int Width, int Height)
 	Eyepos = Vector3(0, 0, 5.0f);
 	Refpos = Vector3(0, 3, 0);
 	Upvec = Vector3(0, 1, 0);
+
 	FovY = XMConvertToRadians(60.0f);
 	Aspect= (float)Width / Height;
+	Nearclip = 0.1f;
+	Farclip = 1000.0f;
 
 	//ビュー行列を生成
-
+	View = Matrix::CreateLookAt(Eyepos, Refpos, Upvec);
 	//射影行列の生成（透視投影）
-
+	Proj = Matrix::CreatePerspectiveFieldOfView(FovY, Aspect, Nearclip, Farclip);
 }
 
 Camera::~Camera()
@@ -31,31 +33,32 @@ Camera::~Camera()
 void Camera::Update()
 {
 	//ビュー行列を生成
-
+	View = Matrix::CreateLookAt(Eyepos, Refpos, Upvec);
 	//射影行列の生成（透視投影）
+	Proj = Matrix::CreatePerspectiveFieldOfView(FovY, Aspect, Nearclip, Farclip);
 }
 
-DirectX::SimpleMath::Matrix Camera::GetViewMatrix()
+const DirectX::SimpleMath::Matrix& Camera::GetViewMatrix()
 {
 	return View;
 }
 
-DirectX::SimpleMath::Matrix Camera::GetProjectionMatrix()
+const DirectX::SimpleMath::Matrix& Camera::GetProjectionMatrix()
 {
 	return Proj;
 }
 
-void Camera::SetEyePos(DirectX::SimpleMath::Vector3 eyepos)
+void Camera::SetEyePos(const DirectX::SimpleMath::Vector3& eyepos)
 {
 	Eyepos = eyepos;
 }
 
-void Camera::SetRefPos(DirectX::SimpleMath::Vector3 refpos)
+void Camera::SetRefPos(const DirectX::SimpleMath::Vector3& refpos)
 {
 	Refpos = refpos;
 }
 
-void Camera::SetUpVec(DirectX::SimpleMath::Vector3 upvec)
+void Camera::SetUpVec(const DirectX::SimpleMath::Vector3& upvec)
 {
 	Upvec = upvec;
 }
