@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Camera.h"
+#include <Keyboard.h>
 
 class FollowCamera:public Camera
 {
@@ -19,10 +20,18 @@ public:
 
 	void SetTargetAngle(float targetangle);
 
+	//キーボードをセット
+	void Setkeyboard(DirectX::Keyboard* keyboard);
+
 protected:
 	//自機の座標
 	DirectX::SimpleMath::Vector3 m_targetPos;
 	//自機の回転角
 	float m_targetAngle;
-
+	//キーボード
+	DirectX::Keyboard* m_keyboard;
+	//キーボードトラッカー
+	DirectX::Keyboard::KeyboardStateTracker m_keyboardTracker;
+	//視点の切り替え
+	bool m_flag;
 };
