@@ -12,8 +12,10 @@
 #include <SimpleMath.h>
 #include <Model.h>
 #include <Keyboard.h>
+#include <vector>
 #include "DebugCamera.h"
 #include "FollowCamera.h"
+#include "Obj3d.h"
 
 
 // A basic game implementation that creates a D3D11 device and
@@ -76,7 +78,6 @@ private:
 	std::unique_ptr<DirectX::BasicEffect> m_effect;
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
 
-	DirectX::SimpleMath::Matrix m_world;
 	DirectX::SimpleMath::Matrix m_view;
 	DirectX::SimpleMath::Matrix m_proj;
 
@@ -97,14 +98,21 @@ private:
 	//ティーポットモデル
 	std::unique_ptr<DirectX::Model> m_modelTeapot;
 	DirectX::SimpleMath::Matrix m_worldTeapot[20];
-	//ロボットの頭モデル
-	std::unique_ptr<DirectX::Model> m_modelHead;
+	////ロボットの頭モデル
+	//std::unique_ptr<DirectX::Model> m_modelHead;
 	//キーボード
 	std::unique_ptr<DirectX::Keyboard> keyboard;
 	//自機の座標
 	DirectX::SimpleMath::Vector3 tank_pos;
-	//自機のワールド行列
-	DirectX::SimpleMath::Matrix tank_world;
+	////自機のワールド行列
+	//DirectX::SimpleMath::Matrix tank_world;
+	////自機のワールド行列2
+	//DirectX::SimpleMath::Matrix tank_world2;
+
+	//自機の３Ｄオブジェクト
+	obj3d m_ObjPlayer1;
+	obj3d m_ObjPlayer2;
+	//std::vector<obj3d> m_ObjPlayer;
 	//自機の回転角
 	float rotHead;
 
