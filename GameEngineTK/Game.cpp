@@ -87,7 +87,7 @@ void Game::Initialize(HWND window, int width, int height)
 	m_factory->SetDirectory(L"Resources");
 	//モデルの読み込み
 	m_modelGround = Model::CreateFromCMO(m_d3dDevice.Get(), L"Resources\\Ground200.cmo", *m_factory);
-	m_modelSkydome = Model::CreateFromCMO(m_d3dDevice.Get(), L"Resources\\skydome.cmo", *m_factory);
+	m_objSkydome.LoadModel(L"Resources\\skydome.cmo");
 	m_modelBall = Model::CreateFromCMO(m_d3dDevice.Get(), L"Resources\\ball.cmo", *m_factory);
 	m_modelTeapot = Model::CreateFromCMO(m_d3dDevice.Get(), L"Resources\\teapot.cmo", *m_factory);
 	//m_modelHead = Model::CreateFromCMO(m_d3dDevice.Get(), L"Resources\\Head.cmo", *m_factory);
@@ -159,6 +159,28 @@ void Game::Initialize(HWND window, int width, int height)
 	//	//ワールド行列の合成
 	//	m_worldTeapot[i] = scalemat * transmat * rotmat;
 	//}
+
+	//自機パーツの読み込み
+	m_ObjPlayer.resize(PLAYER_PARTE_NUM);
+	m_ObjPlayer[PLAYER_TANK].LoadModel(L"Resources\\Tank.cmo");
+	m_ObjPlayer[PLAYER_BODY].LoadModel(L"Resources\\Body.cmo");
+	m_ObjPlayer[PLAYER_HEAD].LoadModel(L"Resources\\Head.cmo");
+	m_ObjPlayer[PLAYER_SHIELD].LoadModel(L"Resources\\Shield.cmo");
+	m_ObjPlayer[PLAYER_BULLET].LoadModel(L"Resources\\Bullet.cmo");
+	
+	//パーツの親子関係をセット
+	m_ObjPlayer[PLAYER_HEAD].SetPalent(&m_ObjPlayer[PLAYER_BODY]);
+	m_ObjPlayer[PLAYER_BULLET].SetPalent(&m_ObjPlayer[PLAYER_HEAD]);
+	m_ObjPlayer[PLAYER_SHIELD].SetPalent(&m_ObjPlayer[PLAYER_HEAD]);
+	m_ObjPlayer[PLAYER_BODY].SetPalent(&m_ObjPlayer[PLAYER_TANK]);
+
+	//親からのオフセット（座標ずらし分）をセット
+	m_ObjPlayer[PLAYER_HEAD].SetTranslation(Vector3(0,0.25f, 0));
+	m_ObjPlayer[PLAYER_BODY].SetTranslation(Vector3(0, 0.4f, 0));
+	m_ObjPlayer[PLAYER_SHIELD].SetTranslation(Vector3(0.3f, 0.3f, 0));
+	m_ObjPlayer[PLAYER_BULLET].SetScale(Vector3(1.3f));
+	
+	m_sinAngle = 0;
 }
 
 // Executes the basic game loop.
@@ -195,6 +217,8 @@ void Game::Update(DX::StepTimer const& timer)
 		m_proj = m_Camera->GetProjectionMatrix();
 
 	}
+
+	m_objSkydome.Update();
 
 	////何処から見るのか（視点）
 	//Vector3 eyepos(0, 0, 5.0f);
@@ -240,6 +264,18 @@ void Game::Update(DX::StepTimer const& timer)
 	//	m_worldTeapot[i] = rotmat * transmat ;
 	//}
 
+	//自機パーツのギミック
+	Vector3 angle = m_ObjPlayer[PLAYER_BULLET].GetRotation();
+	m_ObjPlayer[PLAYER_BULLET].SetRotation(angle += Vector3(0, 0, 0.01f));
+
+	//Vector3 pos;
+	//pos = m_ObjPlayer[PLAYER_BULLET].GetTranslation();
+	//m_ObjPlayer[PLAYER_BULLET].SetTranslation(pos -= Vector3(0, 0, 0.03f));
+
+	m_sinAngle += 0.1f;
+	m_ObjPlayer[PLAYER_SHIELD].SetTranslation(Vector3(0.3f, 0.3f, 0) + Vector3(0, 0, sinf(m_sinAngle)));
+
+
 	//キーボードの状態取得
 	Keyboard::State g_key = keyboard->GetState();
 
@@ -247,12 +283,16 @@ void Game::Update(DX::StepTimer const& timer)
 	if (g_key.A)
 	{
 		//自機の角度を回転させる
-		rotHead += 0.03f;
+		//rotHead += 0.03f;
+		float angle = m_ObjPlayer[0].GetRotation().y;
+		m_ObjPlayer[0].SetRotation(Vector3(0, angle + 0.03f, 0));
 	}
 	//Dキーが押されたら右旋回
 	if (g_key.D)
 	{
-		rotHead -= 0.03f;
+		//rotHead -= 0.03f;
+		float angle = m_ObjPlayer[0].GetRotation().y;
+		m_ObjPlayer[0].SetRotation(Vector3(0, angle - 0.03f, 0));
 	}
 	//Wキーが押されていたら前進
 	if (g_key.W)
@@ -260,18 +300,25 @@ void Game::Update(DX::StepTimer const& timer)
 		//移動ベクトル（Z座標前進）
 		Vector3 moveV(0, 0, -0.1f);
 		//移動量ベクトルを自機の角度分回転させる
-		Matrix rotmat = Matrix::CreateRotationY(rotHead);
+		float angle = m_ObjPlayer[0].GetRotation().y;
+		Matrix rotmat = Matrix::CreateRotationY(angle);
 		moveV = Vector3::TransformNormal(moveV, rotmat);
 		//自機の座標を移動
-		tank_pos += moveV;
+		//tank_pos += moveV;
+		Vector3 pos = m_ObjPlayer[0].GetTranslation();
+		m_ObjPlayer[0].SetTranslation(pos + moveV);
 	}
 	//Sキーが押されたら後退
 	if (g_key.S)
 	{
 		Vector3 moveV(0, 0, 0.1f);
-		Matrix rotmat = Matrix::CreateRotationY(rotHead);
+		float angle = m_ObjPlayer[0].GetRotation().y;
+		Matrix rotmat = Matrix::CreateRotationY(angle);
 		moveV = Vector3::TransformNormal(moveV, rotmat);
-		tank_pos += moveV;
+		//自機の座標を移動
+		//tank_pos += moveV;
+		Vector3 pos = m_ObjPlayer[0].GetTranslation();
+		m_ObjPlayer[0].SetTranslation(pos + moveV);
 	}
 
 
@@ -288,6 +335,11 @@ void Game::Update(DX::StepTimer const& timer)
 	//	//ワールド行列を合成
 	//	tank_world2 = rotmat2 * transmat2 * tank_world;
 	//}
+
+	for (std::vector<obj3d>::iterator it = m_ObjPlayer.begin(); it != m_ObjPlayer.end(); it++)
+	{
+		it->Update();
+	}
 	
 }
 
@@ -318,7 +370,7 @@ void Game::Render()
 	m_d3dContext->IASetInputLayout(m_inputLayout.Get());
 
 	//天球モデルの描画
-	m_modelSkydome->Draw(m_d3dContext.Get(), m_states, Matrix::Identity, m_view, m_proj);
+	m_objSkydome.Draw();
 	//地面モデルの描画
 	m_modelGround->Draw(m_d3dContext.Get(), m_states, Matrix::Identity, m_view, m_proj);
 	//球モデルの描画
@@ -335,6 +387,11 @@ void Game::Render()
 	//m_modelHead->Draw(m_d3dContext.Get(), m_states, tank_world, m_view, m_proj);
 	////ロボットの頭モデル2の描画
 	//m_modelHead->Draw(m_d3dContext.Get(), m_states, tank_world2, m_view, m_proj);
+
+	for (std::vector<obj3d>::iterator it = m_ObjPlayer.begin(); it != m_ObjPlayer.end(); it++)
+	{
+		it->Draw();
+	}
 
 	m_batch->Begin();
 	m_batch->DrawLine(

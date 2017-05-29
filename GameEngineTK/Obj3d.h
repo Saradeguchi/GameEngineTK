@@ -50,32 +50,78 @@ public:
 
 	//setter
 	//スケーリング（xyz）
+	void SetScale(DirectX::SimpleMath::Vector3& Scale)
+	{
+		m_Scale = Scale;
+	}
 
 	//回転角（xyz）
+	void SetRotation(DirectX::SimpleMath::Vector3& Rotation)
+	{
+		m_Rotation = Rotation;
+	}
 
 	//平行移動（xyz）
+	void SetTranslation(DirectX::SimpleMath::Vector3& Translation)
+	{
+		m_Translation = Translation;
+	}
+	//親の3Dオブジェクトのポインタ
+	void SetPalent(obj3d* palent) 
+	{
+		m_parent = palent; 
+	}
 
 
 	//getter
 	//スケーリング（xyz）
+	const DirectX::SimpleMath::Vector3& GetScale()
+	{
+		return m_Scale; 
+	}
 
 	//回転角（xyz）
+	const DirectX::SimpleMath::Vector3& GetRotation() 
+	{
+		return m_Rotation;
+	}
 
 	//平行移動（xyz）
+	const DirectX::SimpleMath::Vector3& GetTranslation()
+	{ 
+		return m_Translation; 
+	}
 
 	//ワールド行列
+	const DirectX::SimpleMath::Matrix& GetWorld()
+	{
+		return m_World; 
+	}
 
+	//親の3Dオブジェクトのポインタ
+	obj3d* GetPalent()
+	{
+		return m_parent; 
+	}
 
 private:
 	//メンバ変数
 	//3Dモデル
+	//ロボットの頭モデル
+	std::unique_ptr<DirectX::Model> m_model;
 
 	//スケーリング（xyz）
+	DirectX::SimpleMath::Vector3 m_Scale;
 
 	//回転角（xyz）
+	DirectX::SimpleMath::Vector3 m_Rotation;
 
 	//平行移動（xyz）
+	DirectX::SimpleMath::Vector3 m_Translation;
 
 	//ワールド行列
+	DirectX::SimpleMath::Matrix m_World;
 
+	//親の3dオブジェクトクラスのポインタ
+	obj3d* m_parent;
 };

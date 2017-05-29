@@ -30,18 +30,43 @@ void obj3d::InitializeStatic(Microsoft::WRL::ComPtr<ID3D11Device> d3dDevice, Mic
 
 obj3d::obj3d()
 {
+	//ƒXƒP[ƒ‹‚Í‚O‚Å‚Í‚È‚­‚P”{‚ªŠî–{
+	m_Scale = Vector3(1, 1, 1);
+	m_parent = nullptr;
 }
 
 void obj3d::LoadModel(const wchar_t * fileName)
 {
+	//ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
+	m_model = Model::CreateFromCMO(m_d3dDevice.Get(), fileName, *m_factory);
 }
 
 void obj3d::Update()
 {
 	//Žå‚És—ñ‚ÌŒvŽZ
+	Matrix scalemat = Matrix::CreateScale(m_Scale);
+
+	Matrix rotmatZ= Matrix::CreateRotationZ(m_Rotation.z);
+	Matrix rotmatY = Matrix::CreateRotationY(m_Rotation.y);
+	Matrix rotmatX = Matrix::CreateRotationY(m_Rotation.x);
+	Matrix rotmat = rotmatZ * rotmatX * rotmatY;
+	Matrix transmat = Matrix::CreateTranslation(m_Translation);
+	//ƒ[ƒ‹ƒhs—ñ‚ð‡¬
+	m_World = scalemat * rotmat * transmat;
+	//e‚Ìs—ñ‚ð‚©‚¯‚é
+	if (m_parent)
+	{
+		m_World *= m_parent->m_World;
+	}
 }
 
 void obj3d::Draw()
 {
-	//•`‰æ
+	assert(m_Camera);
+
+	if (m_model)
+	{
+		//•`‰æ
+		m_model->Draw(m_d3dContext.Get(), *m_states, m_World, m_Camera->GetViewMatrix(), m_Camera->GetProjectionMatrix());
+	}
 }

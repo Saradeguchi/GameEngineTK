@@ -202,11 +202,23 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\ball.FBX" />
+    <MeshContentTask Include="Assets\Body.FBX" />
+    <MeshContentTask Include="Assets\Bullet.FBX" />
     <MeshContentTask Include="Assets\Ground1m.FBX" />
     <MeshContentTask Include="Assets\Ground200.FBX" />
     <MeshContentTask Include="Assets\Head.FBX" />
+    <MeshContentTask Include="Assets\Shield.FBX" />
     <MeshContentTask Include="Assets\skydome.FBX" />
+    <MeshContentTask Include="Assets\Tank.FBX" />
     <MeshContentTask Include="Assets\teapot.FBX" />
+    <MeshContentTask Include="Assets\VoidParts\VoidArem1.FBX" />
+    <MeshContentTask Include="Assets\VoidParts\VoidArem2.FBX" />
+    <MeshContentTask Include="Assets\VoidParts\VoidBody.FBX" />
+    <MeshContentTask Include="Assets\VoidParts\VoidHead.FBX" />
+    <MeshContentTask Include="Assets\VoidParts\VoidHear.FBX" />
+    <MeshContentTask Include="Assets\VoidParts\Voidkos.FBX" />
+    <MeshContentTask Include="Assets\VoidParts\VoidLeg1.FBX" />
+    <MeshContentTask Include="Assets\VoidParts\VoidLeg2.FBX" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

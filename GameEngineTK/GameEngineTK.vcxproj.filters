@@ -5,6 +5,9 @@
       <UniqueIdentifier>a39fc55a-8ceb-4aa2-9dd6-06bdffd21a0a</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Assets\Void">
+      <UniqueIdentifier>{2aa0fe9f-8489-4055-8fff-e1a1f4220544}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -55,6 +58,42 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\Head.FBX">
       <Filter>Assets</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\Body.FBX">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\Bullet.FBX">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\Tank.FBX">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\Shield.FBX">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\VoidParts\VoidArem1.FBX">
+      <Filter>Assets\Void</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\VoidParts\VoidArem2.FBX">
+      <Filter>Assets\Void</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\VoidParts\VoidBody.FBX">
+      <Filter>Assets\Void</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\VoidParts\VoidHead.FBX">
+      <Filter>Assets\Void</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\VoidParts\VoidHear.FBX">
+      <Filter>Assets\Void</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\VoidParts\Voidkos.FBX">
+      <Filter>Assets\Void</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\VoidParts\VoidLeg1.FBX">
+      <Filter>Assets\Void</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\VoidParts\VoidLeg2.FBX">
+      <Filter>Assets\Void</Filter>
     </MeshContentTask>
   </ItemGroup>
 </Project>

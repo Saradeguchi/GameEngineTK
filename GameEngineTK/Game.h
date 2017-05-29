@@ -24,6 +24,32 @@ class Game
 {
 public:
 
+	//自機パーツ
+	enum PLAYER_PARTS
+	{
+		PLAYER_TANK,
+		PLAYER_BODY,
+		PLAYER_HEAD,
+		PLAYER_SHIELD,
+		PLAYER_BULLET,
+
+		PLAYER_PARTE_NUM
+	};
+
+	enum VOID_PARTS
+	{
+		VOID_LEG2,
+		VOID_LEG1,
+		VOID_WAIST,
+		VOID_BODY,
+		VOID_ARM1,
+		VOID_ARM2,
+		VOID_HEAD,
+		VOID_HEAR,
+
+		VOID_PARTE_NUM
+	};
+
     Game();
 
     // Initialization and management
@@ -89,7 +115,7 @@ private:
 	//地面モデル
 	std::unique_ptr<DirectX::Model> m_modelGround;
 	//天球モデル
-	std::unique_ptr<DirectX::Model> m_modelSkydome;
+	obj3d m_objSkydome;
 	//球モデル
 	std::unique_ptr<DirectX::Model> m_modelBall;
 	//球ワールド行列
@@ -110,9 +136,11 @@ private:
 	//DirectX::SimpleMath::Matrix tank_world2;
 
 	//自機の３Ｄオブジェクト
-	obj3d m_ObjPlayer1;
-	obj3d m_ObjPlayer2;
-	//std::vector<obj3d> m_ObjPlayer;
+	//obj3d m_ObjPlayer1;
+	//obj3d m_ObjPlayer2;
+	std::vector<obj3d> m_ObjPlayer;
+	//サイン用の引数となる角度
+	float m_sinAngle;
 	//自機の回転角
 	float rotHead;
 
