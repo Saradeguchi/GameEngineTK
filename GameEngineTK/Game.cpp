@@ -161,25 +161,81 @@ void Game::Initialize(HWND window, int width, int height)
 	//}
 
 	//自機パーツの読み込み
-	m_ObjPlayer.resize(PLAYER_PARTE_NUM);
-	m_ObjPlayer[PLAYER_TANK].LoadModel(L"Resources\\Tank.cmo");
-	m_ObjPlayer[PLAYER_BODY].LoadModel(L"Resources\\Body.cmo");
-	m_ObjPlayer[PLAYER_HEAD].LoadModel(L"Resources\\Head.cmo");
-	m_ObjPlayer[PLAYER_SHIELD].LoadModel(L"Resources\\Shield.cmo");
-	m_ObjPlayer[PLAYER_BULLET].LoadModel(L"Resources\\Bullet.cmo");
-	
+	//m_ObjPlayer.resize(PLAYER_PARTE_NUM);
+	//m_ObjPlayer[PLAYER_TANK].LoadModel(L"Resources\\Tank.cmo");
+	//m_ObjPlayer[PLAYER_BODY].LoadModel(L"Resources\\Body.cmo");
+	//m_ObjPlayer[PLAYER_HEAD].LoadModel(L"Resources\\Head.cmo");
+	//m_ObjPlayer[PLAYER_SHIELD].LoadModel(L"Resources\\Shield.cmo");
+	//m_ObjPlayer[PLAYER_BULLET].LoadModel(L"Resources\\Bullet.cmo");
+
+	//Voidパーツ読み込み
+	m_Voidoll.resize(VOID_PARTE_NUM);
+	m_Voidoll[VOID_LEG2L].LoadModel(L"Resources\\VoidLeg2.cmo");
+	m_Voidoll[VOID_LEG2R].LoadModel(L"Resources\\VoidLeg2.cmo");
+	m_Voidoll[VOID_LEG1L].LoadModel(L"Resources\\VoidLeg1.cmo");
+	m_Voidoll[VOID_LEG1R].LoadModel(L"Resources\\VoidLeg1.cmo");
+	m_Voidoll[VOID_WAIST].LoadModel(L"Resources\\Voidkos.cmo");
+	m_Voidoll[VOID_BODY].LoadModel(L"Resources\\VoidBody.cmo");
+	m_Voidoll[VOID_HEAD].LoadModel(L"Resources\\VoidHead.cmo");
+	m_Voidoll[VOID_ARM2L].LoadModel(L"Resources\\VoidArem2.cmo");
+	m_Voidoll[VOID_ARM2R].LoadModel(L"Resources\\VoidArem2.cmo");
+	m_Voidoll[VOID_ARM1L].LoadModel(L"Resources\\VoidArem1.cmo");
+	m_Voidoll[VOID_ARM1R].LoadModel(L"Resources\\VoidArem1.cmo");
+	m_Voidoll[VOID_HEARL].LoadModel(L"Resources\\VoidHear.cmo");
+	m_Voidoll[VOID_HEARR].LoadModel(L"Resources\\VoidHear.cmo");
+
 	//パーツの親子関係をセット
-	m_ObjPlayer[PLAYER_HEAD].SetPalent(&m_ObjPlayer[PLAYER_BODY]);
-	m_ObjPlayer[PLAYER_BULLET].SetPalent(&m_ObjPlayer[PLAYER_HEAD]);
-	m_ObjPlayer[PLAYER_SHIELD].SetPalent(&m_ObjPlayer[PLAYER_HEAD]);
-	m_ObjPlayer[PLAYER_BODY].SetPalent(&m_ObjPlayer[PLAYER_TANK]);
+	//m_ObjPlayer[PLAYER_HEAD].SetPalent(&m_ObjPlayer[PLAYER_BODY]);
+	//m_ObjPlayer[PLAYER_BULLET].SetPalent(&m_ObjPlayer[PLAYER_HEAD]);
+	//m_ObjPlayer[PLAYER_SHIELD].SetPalent(&m_ObjPlayer[PLAYER_HEAD]);
+	//m_ObjPlayer[PLAYER_BODY].SetPalent(&m_ObjPlayer[PLAYER_TANK]);
+
+	//腰を大親に
+	m_Voidoll[VOID_LEG2L].SetPalent(&m_Voidoll[VOID_LEG1L]);
+	m_Voidoll[VOID_LEG2R].SetPalent(&m_Voidoll[VOID_LEG1R]);
+	m_Voidoll[VOID_LEG1L].SetPalent(&m_Voidoll[VOID_WAIST]);
+	m_Voidoll[VOID_LEG1R].SetPalent(&m_Voidoll[VOID_WAIST]);
+	m_Voidoll[VOID_ARM2L].SetPalent(&m_Voidoll[VOID_ARM1L]);
+	m_Voidoll[VOID_ARM2R].SetPalent(&m_Voidoll[VOID_ARM1R]);
+	m_Voidoll[VOID_ARM1L].SetPalent(&m_Voidoll[VOID_BODY]);
+	m_Voidoll[VOID_ARM1R].SetPalent(&m_Voidoll[VOID_BODY]);
+	m_Voidoll[VOID_HEARL].SetPalent(&m_Voidoll[VOID_HEAD]);
+	m_Voidoll[VOID_HEARR].SetPalent(&m_Voidoll[VOID_HEAD]);
+	m_Voidoll[VOID_HEAD].SetPalent(&m_Voidoll[VOID_BODY]);
+	m_Voidoll[VOID_BODY].SetPalent(&m_Voidoll[VOID_WAIST]);
 
 	//親からのオフセット（座標ずらし分）をセット
-	m_ObjPlayer[PLAYER_HEAD].SetTranslation(Vector3(0,0.25f, 0));
-	m_ObjPlayer[PLAYER_BODY].SetTranslation(Vector3(0, 0.4f, 0));
-	m_ObjPlayer[PLAYER_SHIELD].SetTranslation(Vector3(0.3f, 0.3f, 0));
-	m_ObjPlayer[PLAYER_BULLET].SetScale(Vector3(1.3f));
-	
+	//m_ObjPlayer[PLAYER_HEAD].SetTranslation(Vector3(0,0.25f, 0));
+	//m_ObjPlayer[PLAYER_BODY].SetTranslation(Vector3(0, 0.4f, 0));
+	//m_ObjPlayer[PLAYER_SHIELD].SetTranslation(Vector3(0.3f, 0.3f, 0));
+	//m_ObjPlayer[PLAYER_BULLET].SetScale(Vector3(1.3f));
+
+	m_Voidoll[VOID_WAIST].SetTranslation(Vector3(0, 1.7f, 0));
+	m_Voidoll[VOID_LEG1L].SetRotation(Vector3(90.0f, 90.0f, 0));
+	m_Voidoll[VOID_LEG1R].SetRotation(Vector3(0, 90.0f, 0));
+	m_Voidoll[VOID_LEG1L].SetTranslation(Vector3(0.3f, -0.6f, 0));
+	m_Voidoll[VOID_LEG1R].SetTranslation(Vector3(-0.3f, -0.6f, 0));
+	m_Voidoll[VOID_LEG2L].SetScale(Vector3(0.7f));
+	m_Voidoll[VOID_LEG2R].SetScale(Vector3(0.7f));
+	m_Voidoll[VOID_LEG2L].SetTranslation(Vector3(0, -0.3f, 0));
+	m_Voidoll[VOID_LEG2R].SetTranslation(Vector3(0, -0.3f, 0));
+	m_Voidoll[VOID_LEG2L].SetRotation(Vector3(0.8f, 0, 0));
+	m_Voidoll[VOID_LEG2R].SetRotation(Vector3(-0.8f, 0, 0));
+	m_Voidoll[VOID_BODY].SetTranslation(Vector3(0, 0.3f, 0));
+	m_Voidoll[VOID_HEAD].SetTranslation(Vector3(-0.13f, 1.2f, 0));
+	m_Voidoll[VOID_ARM1L].SetTranslation(Vector3(-0.4f, 0.65f, 0));
+	m_Voidoll[VOID_ARM1R].SetTranslation(Vector3(0.4f, 0.65f, 0));
+	m_Voidoll[VOID_ARM1L].SetRotation(Vector3(0, 0, -0.5f));
+	m_Voidoll[VOID_ARM1R].SetRotation(Vector3(0, 0, 0.5f));
+	m_Voidoll[VOID_ARM2L].SetTranslation(Vector3(0, -1.1f, 0));
+	m_Voidoll[VOID_ARM2R].SetTranslation(Vector3(0, -1.1f, 0));
+	m_Voidoll[VOID_HEARL].SetTranslation(Vector3(-0.4f, -0.1f, 0));
+	m_Voidoll[VOID_HEARR].SetTranslation(Vector3(0.6f, -0.1f, 0));
+	m_Voidoll[VOID_HEARL].SetRotation(Vector3(0, 0, -0.5f));
+	m_Voidoll[VOID_HEARR].SetRotation(Vector3(0, 0, 0.5f));
+	m_Voidoll[VOID_HEARL].SetScale(Vector3(1.3f));
+	m_Voidoll[VOID_HEARR].SetScale(Vector3(1.3f));
+
 	m_sinAngle = 0;
 }
 
@@ -265,16 +321,16 @@ void Game::Update(DX::StepTimer const& timer)
 	//}
 
 	//自機パーツのギミック
-	Vector3 angle = m_ObjPlayer[PLAYER_BULLET].GetRotation();
-	m_ObjPlayer[PLAYER_BULLET].SetRotation(angle += Vector3(0, 0, 0.01f));
+	Vector3 angle = m_Voidoll[VOID_LEG2L].GetRotation();
+	Vector3 angler = m_Voidoll[VOID_LEG2R].GetRotation();
+	//m_ObjPlayer[PLAYER_BULLET].SetRotation(angle += Vector3(0, 0, 0.01f));
 
-	//Vector3 pos;
-	//pos = m_ObjPlayer[PLAYER_BULLET].GetTranslation();
-	//m_ObjPlayer[PLAYER_BULLET].SetTranslation(pos -= Vector3(0, 0, 0.03f));
+	////Vector3 pos;
+	////pos = m_ObjPlayer[PLAYER_BULLET].GetTranslation();
+	////m_ObjPlayer[PLAYER_BULLET].SetTranslation(pos -= Vector3(0, 0, 0.03f));
 
-	m_sinAngle += 0.1f;
-	m_ObjPlayer[PLAYER_SHIELD].SetTranslation(Vector3(0.3f, 0.3f, 0) + Vector3(0, 0, sinf(m_sinAngle)));
-
+	//m_sinAngle += 0.1f;
+	//m_ObjPlayer[PLAYER_SHIELD].SetTranslation(Vector3(0.3f, 0.3f, 0) + Vector3(0, 0, sinf(m_sinAngle)));
 
 	//キーボードの状態取得
 	Keyboard::State g_key = keyboard->GetState();
@@ -284,15 +340,15 @@ void Game::Update(DX::StepTimer const& timer)
 	{
 		//自機の角度を回転させる
 		//rotHead += 0.03f;
-		float angle = m_ObjPlayer[0].GetRotation().y;
-		m_ObjPlayer[0].SetRotation(Vector3(0, angle + 0.03f, 0));
+		float angle = m_Voidoll[0].GetRotation().y;
+		m_Voidoll[0].SetRotation(Vector3(0, angle + 0.03f, 0));
 	}
 	//Dキーが押されたら右旋回
 	if (g_key.D)
 	{
 		//rotHead -= 0.03f;
-		float angle = m_ObjPlayer[0].GetRotation().y;
-		m_ObjPlayer[0].SetRotation(Vector3(0, angle - 0.03f, 0));
+		float angle = m_Voidoll[0].GetRotation().y;
+		m_Voidoll[0].SetRotation(Vector3(0, angle - 0.03f, 0));
 	}
 	//Wキーが押されていたら前進
 	if (g_key.W)
@@ -300,25 +356,25 @@ void Game::Update(DX::StepTimer const& timer)
 		//移動ベクトル（Z座標前進）
 		Vector3 moveV(0, 0, -0.1f);
 		//移動量ベクトルを自機の角度分回転させる
-		float angle = m_ObjPlayer[0].GetRotation().y;
+		float angle = m_Voidoll[0].GetRotation().y;
 		Matrix rotmat = Matrix::CreateRotationY(angle);
 		moveV = Vector3::TransformNormal(moveV, rotmat);
 		//自機の座標を移動
 		//tank_pos += moveV;
-		Vector3 pos = m_ObjPlayer[0].GetTranslation();
-		m_ObjPlayer[0].SetTranslation(pos + moveV);
+		Vector3 pos = m_Voidoll[0].GetTranslation();
+		m_Voidoll[0].SetTranslation(pos + moveV);
 	}
 	//Sキーが押されたら後退
 	if (g_key.S)
 	{
 		Vector3 moveV(0, 0, 0.1f);
-		float angle = m_ObjPlayer[0].GetRotation().y;
+		float angle = m_Voidoll[0].GetRotation().y;
 		Matrix rotmat = Matrix::CreateRotationY(angle);
 		moveV = Vector3::TransformNormal(moveV, rotmat);
 		//自機の座標を移動
 		//tank_pos += moveV;
-		Vector3 pos = m_ObjPlayer[0].GetTranslation();
-		m_ObjPlayer[0].SetTranslation(pos + moveV);
+		Vector3 pos = m_Voidoll[0].GetTranslation();
+		m_Voidoll[0].SetTranslation(pos + moveV);
 	}
 
 
@@ -336,10 +392,11 @@ void Game::Update(DX::StepTimer const& timer)
 	//	tank_world2 = rotmat2 * transmat2 * tank_world;
 	//}
 
-	for (std::vector<obj3d>::iterator it = m_ObjPlayer.begin(); it != m_ObjPlayer.end(); it++)
+	for (std::vector<obj3d>::iterator it = m_Voidoll.begin(); it != m_Voidoll.end(); it++)
 	{
 		it->Update();
 	}
+
 	
 }
 
@@ -388,7 +445,7 @@ void Game::Render()
 	////ロボットの頭モデル2の描画
 	//m_modelHead->Draw(m_d3dContext.Get(), m_states, tank_world2, m_view, m_proj);
 
-	for (std::vector<obj3d>::iterator it = m_ObjPlayer.begin(); it != m_ObjPlayer.end(); it++)
+	for (std::vector<obj3d>::iterator it = m_Voidoll.begin(); it != m_Voidoll.end(); it++)
 	{
 		it->Draw();
 	}

@@ -38,14 +38,19 @@ public:
 
 	enum VOID_PARTS
 	{
-		VOID_LEG2,
-		VOID_LEG1,
 		VOID_WAIST,
+		VOID_LEG2L,
+		VOID_LEG2R,
+		VOID_LEG1L,
+		VOID_LEG1R,
 		VOID_BODY,
-		VOID_ARM1,
-		VOID_ARM2,
+		VOID_ARM1L,
+		VOID_ARM1R,
+		VOID_ARM2L,
+		VOID_ARM2R,
 		VOID_HEAD,
-		VOID_HEAR,
+		VOID_HEARL,
+		VOID_HEARR,
 
 		VOID_PARTE_NUM
 	};
@@ -139,6 +144,7 @@ private:
 	//obj3d m_ObjPlayer1;
 	//obj3d m_ObjPlayer2;
 	std::vector<obj3d> m_ObjPlayer;
+	std::vector<obj3d> m_Voidoll;
 	//サイン用の引数となる角度
 	float m_sinAngle;
 	//自機の回転角
