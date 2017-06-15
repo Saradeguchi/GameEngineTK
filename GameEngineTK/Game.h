@@ -16,6 +16,8 @@
 #include "DebugCamera.h"
 #include "FollowCamera.h"
 #include "Obj3d.h"
+#include "Player.h"
+#include "Enemy.h"
 
 
 // A basic game implementation that creates a D3D11 device and
@@ -34,25 +36,6 @@ public:
 		PLAYER_BULLET,
 
 		PLAYER_PARTE_NUM
-	};
-
-	enum VOID_PARTS
-	{
-		VOID_WAIST,
-		VOID_LEG2L,
-		VOID_LEG2R,
-		VOID_LEG1L,
-		VOID_LEG1R,
-		VOID_BODY,
-		VOID_ARM1L,
-		VOID_ARM1R,
-		VOID_ARM2L,
-		VOID_ARM2R,
-		VOID_HEAD,
-		VOID_HEARL,
-		VOID_HEARR,
-
-		VOID_PARTE_NUM
 	};
 
     Game();
@@ -144,7 +127,13 @@ private:
 	//obj3d m_ObjPlayer1;
 	//obj3d m_ObjPlayer2;
 	std::vector<obj3d> m_ObjPlayer;
-	std::vector<obj3d> m_Voidoll;
+
+	//プレイヤークラスの生成
+	Player* m_Player;
+
+	static const int ENEMY_NUM = 5;
+	Enemy* m_Enemy[ENEMY_NUM];
+
 	//サイン用の引数となる角度
 	float m_sinAngle;
 	//自機の回転角

@@ -5,6 +5,7 @@
 #pragma once
 #include "Camera.h"
 #include <Keyboard.h>
+#include "Player.h"
 
 class FollowCamera:public Camera
 {
@@ -23,6 +24,9 @@ public:
 	//キーボードをセット
 	void Setkeyboard(DirectX::Keyboard* keyboard);
 
+	//プレイヤーをセット
+	void SetPlayer(Player* player);
+
 protected:
 	//自機の座標
 	DirectX::SimpleMath::Vector3 m_targetPos;
@@ -34,4 +38,6 @@ protected:
 	DirectX::Keyboard::KeyboardStateTracker m_keyboardTracker;
 	//視点の切り替え
 	bool m_flag;
+	//プレイヤー
+	Player* m_player;
 };

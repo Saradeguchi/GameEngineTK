@@ -33,6 +33,9 @@ obj3d::obj3d()
 	//スケールは０ではなく１倍が基本
 	m_Scale = Vector3(1, 1, 1);
 	m_parent = nullptr;
+
+	//デフォルトでは、オイラー角を使用
+	m_UseQuaternion = false;
 }
 
 void obj3d::LoadModel(const wchar_t * fileName)
@@ -46,10 +49,19 @@ void obj3d::Update()
 	//主に行列の計算
 	Matrix scalemat = Matrix::CreateScale(m_Scale);
 
-	Matrix rotmatZ= Matrix::CreateRotationZ(m_Rotation.z);
-	Matrix rotmatY = Matrix::CreateRotationY(m_Rotation.y);
-	Matrix rotmatX = Matrix::CreateRotationY(m_Rotation.x);
-	Matrix rotmat = rotmatZ * rotmatX * rotmatY;
+	//回転行列
+	Matrix rotmat;
+	if (m_UseQuaternion)
+	{//クォータニオンで計算
+		rotmat = Matrix::CreateFromQuaternion(m_RotationQ);
+	}
+	else
+	{//オイラー角で計算
+		Matrix rotmatZ = Matrix::CreateRotationZ(m_Rotation.z);
+		Matrix rotmatX = Matrix::CreateRotationY(m_Rotation.x);
+		Matrix rotmatY = Matrix::CreateRotationY(m_Rotation.y);
+		rotmat = rotmatZ * rotmatX * rotmatY;
+	}
 	Matrix transmat = Matrix::CreateTranslation(m_Translation);
 	//ワールド行列を合成
 	m_World = scalemat * rotmat * transmat;

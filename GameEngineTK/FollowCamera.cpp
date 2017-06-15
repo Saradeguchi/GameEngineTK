@@ -17,6 +17,7 @@ FollowCamera::FollowCamera(int Width, int Height)
 	m_targetAngle = 0.0f;
 	m_keyboard = nullptr;
 	m_flag = true;
+	m_player = nullptr;
 }
 
 void FollowCamera::Update()
@@ -29,6 +30,12 @@ void FollowCamera::Update()
 	{
 		//フラグの切り替え
 		m_flag = !m_flag;
+	}
+
+	if (m_player)
+	{
+		SetTargetPos(m_player->GetTranslation());
+		SetTargetAngle(m_player->GetRotation().y);
 	}
 
 	//視点、参照点座標
@@ -88,4 +95,9 @@ void FollowCamera::SetTargetAngle(float targetangle)
 void FollowCamera::Setkeyboard(DirectX::Keyboard * keyboard)
 {
 	m_keyboard = keyboard;
+}
+
+void FollowCamera::SetPlayer(Player * player)
+{
+	m_player = player;
 }

@@ -59,6 +59,14 @@ public:
 	void SetRotation(DirectX::SimpleMath::Vector3& Rotation)
 	{
 		m_Rotation = Rotation;
+		m_UseQuaternion = false;
+	}
+
+	//回転角（クォータニオン）
+	void SetRotation(DirectX::SimpleMath::Quaternion& Rotation)
+	{
+		m_RotationQ = Rotation;
+		m_UseQuaternion = true;
 	}
 
 	//平行移動（xyz）
@@ -113,8 +121,11 @@ private:
 	//スケーリング（xyz）
 	DirectX::SimpleMath::Vector3 m_Scale;
 
-	//回転角（xyz）
+	//回転角（xyz/オイラー角）
 	DirectX::SimpleMath::Vector3 m_Rotation;
+
+	//回転角（クォータニオン）
+	DirectX::SimpleMath::Quaternion m_RotationQ;
 
 	//平行移動（xyz）
 	DirectX::SimpleMath::Vector3 m_Translation;
@@ -124,4 +135,7 @@ private:
 
 	//親の3dオブジェクトクラスのポインタ
 	obj3d* m_parent;
+
+	//クォータニオン使用フラグ
+	bool m_UseQuaternion;
 };
